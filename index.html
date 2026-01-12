@@ -1,0 +1,908 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-particle-system-component@1.2.0/dist/aframe-particle-system-component.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/gh/c-frame/aframe-extras@7.5.4/dist/aframe-extras.min.js"></script>
+    <title>Malta 1979 Flood</title>
+  </head>
+  <body>
+    <a-scene stats>
+      <a-assets>
+        <img id="sunnySky" src="Images/Sky/Sunny Sky.jpg" />
+        <img id="cloudySky" src="Images/Sky/Cloudy Sky 1.jpg" />
+
+        <img id="buildingTexture1" src="Images/Building Textures/Wall Texture 1.jpg" />
+        <img id="buildingTexture2" src="Images/Building Textures/Wall Texture 2.jpg" />
+        <img id="buildingTexture3" src="Images/Building Textures/Wall Texture 3.jpg" />
+        <img id="buildingTexture4" src="Images/Building Textures/Wall Texture 4.jpg" />
+        <img id="buildingTexture5" src="Images/Building Textures/Wall Texture 5.jpg" />
+
+        <a-asset-item id="wall1" src="3D/Broken Walls/Broken Wall 1/scene.gltf"></a-asset-item>
+        <a-asset-item id="wall2" src="3D/Broken Walls/Broken Wall 2/scene.gltf"></a-asset-item>
+
+        <a-asset-item id="car1" src="3D/Cars/lowpoly_abandoned_simple_car_prop_-_game_ready/scene.gltf"></a-asset-item>
+        <a-asset-item id="car2" src="3D/Cars/old_car/scene.gltf"></a-asset-item>
+        <a-asset-item id="car3" src="3D/Cars/old_car_-_vaz_2107/scene.gltf"></a-asset-item>
+        <a-asset-item id="car4" src="3D/Cars/stylized_volvo_amazon/scene.gltf"></a-asset-item>
+        <a-asset-item id="car5" src="3D/Cars/volvo_240/scene.gltf"></a-asset-item>
+        <a-asset-item id="oldCar1" src="3D/Cars/old_rusty_car/scene.gltf"></a-asset-item>
+        <a-asset-item id="oldCar2" src="3D/Cars/old_rusty_car_2/scene.gltf"></a-asset-item>
+
+        <img id="roadFloor" src="Images/Floor/Road.jpg" />
+        <img id="pathFloor" src="Images/Floor/Path.jpg" />
+
+        <img id="play" src="Images/Buttons/Play.png" />
+        <img id="info" src="Images/Buttons/Info.png" />
+        <img id="photos" src="Images/Buttons/Photos.png" />
+        <img id="ArrowL" src="Images/Buttons/ArrowL.png" />
+        <img id="ArrowR" src="Images/Buttons/ArrowR.png" />
+
+        <a-asset-item id="rubble1" src="3D/Rubble/rubble 1/scene.gltf"></a-asset-item>
+        <a-asset-item id="rubble2" src="3D/Rubble/rubble 2/scene.gltf"></a-asset-item>
+        <a-asset-item id="rubble3" src="3D/Rubble/rubble 3/scene.gltf"></a-asset-item>
+
+        <img id="img1" src="Images/1979Flood/1.jpg" />
+        <img id="img2" src="Images/1979Flood/2.jpg" />
+        <img id="img3" src="Images/1979Flood/3.jpg" />
+        <img id="img4" src="Images/1979Flood/4.jpg" />
+        <img id="img5" src="Images/1979Flood/5.jpg" />
+        <img id="img6" src="Images/1979Flood/6.png" />
+
+        <audio id="rainSound" src="Sound/rain.mp3"></audio>
+        <audio id="ambience" src="Sound/ambience.mp3"></audio>
+      </a-assets>
+
+      <a-sky src="#sunnySky" scale="10 10 10" rotation="0 150 -50"></a-sky>
+      <a-plane rotation="-90 0 0" color="black" width="400" height="400"></a-plane>
+
+      <a-entity light="type: ambient; color: #BBB"></a-entity>
+      <a-entity light="type: directional; color: #FFF; intensity: 0.6" position="1 1 -1"></a-entity>
+
+      <a-entity
+        id="rain"
+        position="0 100 0"
+        particle-system="
+          preset: none;
+          texture: Images/RainDrop.png;
+          particleCount: 20000;
+          size: 1;
+          sizeSpread: 0.5;
+          velocityValue: 0 -7 0;
+          velocitySpread: 0.1 1 0.1;
+          accelerationValue: 0 -15 0;
+          positionSpread: 100 0 100;
+          maxAge: 10;
+          direction: -1;
+        "
+      ></a-entity>
+
+      <a-entity id="floodWater" ocean="density: 20; width: 100; depth: 100; speed: 1" position="0 -1 0" rotation="-90 0 0"></a-entity>
+
+      <a-entity>
+        <a-camera look-controls="pointerLockEnabled: true" position="0 2.3 0">
+          <a-cursor color="green"></a-cursor>
+        </a-camera>
+      </a-entity>
+
+      <a-entity id="buttons" visible="true">
+        <a-entity id="startButtons">
+          <a-image id="playButton" src="#play" position="0 2 4" scale="1 1 1" rotation="0 180 0"></a-image>
+        </a-entity>
+
+        <a-entity id="endButtons" visible="false">
+          <a-image id="infoButton" src="#info" position="2 2 -5" scale="1 1 1" rotation="0 0 0"></a-image>
+          <a-image id="photosButton" src="#photos" position="-2 2 -5" scale="1 1 1" rotation="0 0 0"></a-image>
+          <a-image id="ArrowLButton" src="#ArrowL" position="-0.5 2 -5" scale="1 1 1" rotation="0 0 0"></a-image>
+          <a-image id="ArrowRButton" visible="false" src="#ArrowR" position="0.5 2 -5" scale="1 1 1" rotation="0 0"></a-image>
+        </a-entity>
+      </a-entity>
+
+      <a-text id="webVrText" visible="true" color="red" position="4 3 4" rotation="0 180 0" scale="2 2 2" value="Press the button in the bottom right to enable WebVR"></a-text>
+
+      <a-entity id="buildings">
+        <a-box id="building1" height="50" width="20" depth="15" position="-20 0 -40" material="src: #buildingTexture3"></a-box>
+        <a-box id="building2" height="25" width="20" depth="15" position="0 0 -40" material="src: #buildingTexture1"></a-box>
+        <a-box id="building3" height="22.5" width="20" depth="15" position="20 0 -40" material="src: #buildingTexture2"></a-box>
+
+        <a-box id="building4" height="30" width="20" depth="15" position="20 0 40" material="src: #buildingTexture4" rotation="0 180 0"></a-box>
+        <a-box id="building5" height="37.5" width="20" depth="15" position="-20 0 40" material="src: #buildingTexture5" rotation="0 180 0"></a-box>
+
+        <a-box id="building6" height="30" width="20" depth="15" position="52.5 0 -22.5" material="src: #buildingTexture1" rotation="0 270 0"></a-box>
+        <a-box id="building7" height="25" width="25" depth="15" position="52.5 0 0" material="src: #buildingTexture2" rotation="0 270 0"></a-box>
+        <a-box id="building8" height="37.5" width="20" depth="15" position="52.5 0 22.5" material="src: #buildingTexture3" rotation="0 270 0"></a-box>
+
+        <a-box id="building9" height="25" width="20" depth="15" position="-52.5 0 -22.5" material="src: #buildingTexture4" rotation="0 90 0"></a-box>
+        <a-box id="building10" height="30" width="25" depth="15" position="-52.5 0 0" material="src: #buildingTexture5" rotation="0 90 0"></a-box>
+        <a-box id="building11" height="20" width="20" depth="15" position="-52.5 0 22.5" material="src: #buildingTexture1" rotation="0 90 0"></a-box>
+      </a-entity>
+
+      <a-entity id="paths">
+        <a-box id="pathR" height="0.2" width="30" depth="30" position="25 0 0" color="grey" material="src: #pathFloor"></a-box>
+        <a-box id="pathL" height="0.2" width="30" depth="30" position="-25 0 0" color="grey" material="src: #pathFloor"></a-box>
+
+        <a-box id="pathRH" height="0.2" width="5" depth="65" position="-42.5 0 0" color="grey" material="src: #pathFloor"></a-box>
+        <a-box id="pathLH" height="0.2" width="5" depth="65" position="42.5 0 0" color="grey" material="src: #pathFloor"></a-box>
+
+        <a-box id="pathF" height="0.2" width="80" depth="5" position="0 0 -30" color="grey" material="src: #pathFloor"></a-box>
+
+        <a-box id="pathBR" height="0.2" width="30" depth="5" position="25 0 30" color="grey" material="src: #pathFloor"></a-box>
+        <a-box id="pathBL" height="0.2" width="30" depth="5" position="-25 0 30" color="grey" material="src: #pathFloor"></a-box>
+      </a-entity>
+
+      <a-entity id="walls">
+        <a-gltf-model gltf-model="#wall2" position="37.5 0 -32.5" scale="4.5 3 3" rotation="0 -2 0"></a-gltf-model>
+        <a-gltf-model gltf-model="#wall2" position="-37.5 0 -32.5" scale="4.5 3 3" rotation="0 -2 0"></a-gltf-model>
+
+        <a-gltf-model gltf-model="#wall2" position="37.5 0 32.5" scale="4.5 3 3" rotation="0 -182 0"></a-gltf-model>
+        <a-gltf-model gltf-model="#wall2" position="-37.5 0 32.5" scale="4.5 3 3" rotation="0 -182 0"></a-gltf-model>
+      </a-entity>
+
+      <a-entity id="cars">
+        <a-entity id="car1wrapper" position="8 0 -10">
+          <a-gltf-model id="car1" gltf-model="#car1" scale="0.08 0.08 0.08" rotation="0 90 0"></a-gltf-model>
+        </a-entity>
+
+        <a-entity id="car2wrapper" position="-8 0 0">
+          <a-gltf-model id="car2" gltf-model="#car2" scale="1 1 1" rotation="0 90 0"></a-gltf-model>
+        </a-entity>
+
+        <a-entity id="car3wrapper" position="8 0 10">
+          <a-gltf-model id="car3" gltf-model="#car3" scale="0.012 0.012 0.012" rotation="0 0 0"></a-gltf-model>
+        </a-entity>
+
+        <a-entity id="car4wrapper" position="20 0 -17">
+          <a-gltf-model id="car4" gltf-model="#car4" scale="6 6 6" rotation="0 90 0"></a-gltf-model>
+        </a-entity>
+
+        <a-entity id="car5wrapper" position="-30 0 17">
+          <a-gltf-model id="car5" gltf-model="#car5" scale="0.12 0.12 0.12" rotation="0 90 0"></a-gltf-model>
+        </a-entity>
+
+        <a-entity id="oldCar1wrapper" position="-6 0 7" visible="false">
+          <a-gltf-model id="oldCar1" gltf-model="#oldCar1" scale="0.011 0.012 0.011" rotation="0 90 0"></a-gltf-model>
+        </a-entity>
+
+        <a-entity id="oldCar2wrapper" position="27 0 20" visible="false">
+          <a-gltf-model id="oldCar2" gltf-model="#oldCar2" scale="0.027 0.027 0.027" rotation="0 90 0"></a-gltf-model>
+        </a-entity>
+      </a-entity>
+
+      <a-entity id="doors">
+        <a-box color="#382901" height="8" width="3" depth="0.2" position="0 0 -32.5"></a-box>
+        <a-box color="#382901" height="8" width="3" depth="0.2" position="20 0 -32.5"></a-box>
+        <a-box color="#382901" height="8" width="3" depth="0.2" position="-25 0 -32.5"></a-box>
+
+        <a-box color="#382901" height="8" width="3" depth="0.2" position="20 0 32.5"></a-box>
+        <a-box color="#382901" height="8" width="3" depth="0.2" position="-25 0 32.5"></a-box>
+
+        <a-box color="#382901" height="8" width="3" depth="0.2" position="45 0 0" rotation="0 90 0"></a-box>
+        <a-box color="#382901" height="8" width="3" depth="0.2" position="45 0 -22.5" rotation="0 90 0"></a-box>
+        <a-box color="#382901" height="8" width="3" depth="0.2" position="45 0 22.5" rotation="0 90 0"></a-box>
+
+        <a-box color="#382901" height="8" width="3" depth="0.2" position="-45 0 0" rotation="0 90 0"></a-box>
+        <a-box color="#382901" height="8" width="3" depth="0.2" position="-45 0 -22.5" rotation="0 90 0"></a-box>
+        <a-box color="#382901" height="8" width="3" depth="0.2" position="-45 0 22.5" rotation="0 90 0"></a-box>
+      </a-entity>
+
+      <a-entity id="windows">
+        <!--Building 1-->
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="0 8 -32.5"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="6 8 -32.5"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="-6 8 -32.5"></a-box>
+
+        <!--Building 2-->
+        <a-box color="#89c4fa" height="3" width="4" depth="0.2" position="15 7 -32.5"></a-box>
+        <a-box color="#89c4fa" height="3" width="4" depth="0.2" position="25 7 -32.5"></a-box>
+
+        <!--Building 3-->
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="-15 2.5 -32.5"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="-25 8.5 -32.5"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="-25 14.5 -32.5"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="-25 20.5 -32.5"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="-15 8.5 -32.5"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="-15 14.5 -32.5"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="-15 20.5 -32.5"></a-box>
+
+        <!--Building 4-->
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="14 9 32.5"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="20 9 32.5"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="26 9 32.5"></a-box>
+
+        <!--Building 5-->
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="-15 2.5 32.5"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="-25 8.5 32.5"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="-25 14.5 32.5"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="-15 8.5 32.5"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="-15 14.5 32.5"></a-box>
+
+        <!--Building 6-->
+        <a-box color="#89c4fa" height="6" width="5" depth="0.2" position="45 5 -7" rotation="0 90 0"></a-box>
+        <a-box color="#89c4fa" height="6" width="5" depth="0.2" position="45 5 7" rotation="0 90 0"></a-box>
+
+        <!--Building 7-->
+        <a-box color="#89c4fa" height="4" width="3" depth="0.2" position="45 10 -28.5" rotation="0 90 0"></a-box>
+        <a-box color="#89c4fa" height="4" width="3" depth="0.2" position="45 10 -22.5" rotation="0 90 0"></a-box>
+        <a-box color="#89c4fa" height="4" width="3" depth="0.2" position="45 10 -16.5" rotation="0 90 0"></a-box>
+
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="45 2.5 -28.5" rotation="0 90 0"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="45 2.5 -16.5" rotation="0 90 0"></a-box>
+
+        <!--Building 8-->
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="45 2.5 17" rotation="0 90 0"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="45 2.5 28" rotation="0 90 0"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="45 8.5 17" rotation="0 90 0"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="45 8.5 28" rotation="0 90 0"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="45 14.5 17" rotation="0 90 0"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="45 14.5 28" rotation="0 90 0"></a-box>
+
+        <!--Building 9-->
+        <a-box color="#89c4fa" height="4" width="6" depth="0.2" position="-45 3 -7" rotation="0 90 0"></a-box>
+        <a-box color="#89c4fa" height="4" width="6" depth="0.2" position="-45 3 7" rotation="0 90 0"></a-box>
+        <a-box color="#89c4fa" height="4" width="3" depth="0.2" position="-45 10 -7" rotation="0 90 0"></a-box>
+        <a-box color="#89c4fa" height="4" width="3" depth="0.2" position="-45 10 0" rotation="0 90 0"></a-box>
+        <a-box color="#89c4fa" height="4" width="3" depth="0.2" position="-45 10 7" rotation="0 90 0"></a-box>
+
+        <!--Building 10-->
+        <a-box color="#89c4fa" height="3" width="4" depth="0.2" position="-45 8 -28.5" rotation="0 90 0"></a-box>
+        <a-box color="#89c4fa" height="3" width="4" depth="0.2" position="-45 8 -22.5" rotation="0 90 0"></a-box>
+        <a-box color="#89c4fa" height="3" width="4" depth="0.2" position="-45 8 -16.5" rotation="0 90 0"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="-45 3 -28.5" rotation="0 90 0"></a-box>
+        <a-box color="#89c4fa" height="3" width="3" depth="0.2" position="-45 3 -16.5" rotation="0 90 0"></a-box>
+
+        <!--Building 11-->
+        <a-box color="#89c4fa" height="6" width="4" depth="0.2" position="-45 4.5 28.5" rotation="0 90 0"></a-box>
+        <a-box color="#89c4fa" height="6" width="4" depth="0.2" position="-45 4.5 16.5" rotation="0 90 0"></a-box>
+      </a-entity>
+
+      <a-entity id="road">
+        <a-box width="20" depth="20" height="0.03" position="20 0 -17.5" material="src: #roadFloor"></a-box>
+        <a-box width="20" depth="20" height="0.03" position="40 0 -17.5" material="src: #roadFloor"></a-box>
+        <a-box width="20" depth="20" height="0.03" position="0 0 -17.5" material="src: #roadFloor"></a-box>
+        <a-box width="20" depth="20" height="0.03" position="-20 0 -17.5" material="src: #roadFloor"></a-box>
+        <a-box width="20" depth="20" height="0.03" position="-40 0 -17.5" material="src: #roadFloor"></a-box>
+
+        <a-box width="20" depth="20" height="0.03" position="20 0 2.5" material="src: #roadFloor"></a-box>
+        <a-box width="20" depth="20" height="0.03" position="40 0 2.5" material="src: #roadFloor"></a-box>
+        <a-box width="20" depth="20" height="0.03" position="0 0 2.5" material="src: #roadFloor"></a-box>
+        <a-box width="20" depth="20" height="0.03" position="-20 0 2.5" material="src: #roadFloor"></a-box>
+        <a-box width="20" depth="20" height="0.03" position="-40 0 2.5" material="src: #roadFloor"></a-box>
+
+        <a-box width="20" depth="20" height="0.03" position="20 0 22.5" material="src: #roadFloor"></a-box>
+        <a-box width="20" depth="20" height="0.03" position="40 0 22.5" material="src: #roadFloor"></a-box>
+        <a-box width="20" depth="20" height="0.03" position="0 0 22.5" material="src: #roadFloor"></a-box>
+        <a-box width="20" depth="20" height="0.03" position="-20 0 22.5" material="src: #roadFloor"></a-box>
+        <a-box width="20" depth="20" height="0.03" position="-40 0 22.5" material="src: #roadFloor"></a-box>
+
+        <a-box width="20" depth="20" height="0.03" position="0 0 42.5" material="src: #roadFloor"></a-box>
+        <a-box width="20" depth="20" height="0.03" position="0 0 62.5" material="src: #roadFloor"></a-box>
+      </a-entity>
+
+      <a-entity id="rubble" visible="false">
+        <a-gltf-model gltf-model="#rubble1" position="37.5 1.6 -29" scale="1 1 1" rotation="0 0 0"></a-gltf-model>
+        <a-gltf-model gltf-model="#rubble1" position="-35 2.5 29" scale="1.5 1.5 1.5" rotation="0 270 0"></a-gltf-model>
+        <a-gltf-model gltf-model="#rubble1" position="20 2.3 -5" scale="1.5 1.5 1.5" rotation="0 180 0"></a-gltf-model>
+      </a-entity>
+
+      <a-entity id="images" position="0 0 -15" visible="false">
+        <a-box height="12" width="18" depth="0.1" position="0 4 -5.1"></a-box>
+
+        <a-text color="black" position="-4 8.8 -5" scale="4 4 4" value="Images of the event"></a-text>
+
+        <a-image src="#img1" height="3" width="4" position="0 2 -5" rotation="0 0 0"></a-image>
+        <a-image src="#img2" height="3" width="4" position="6 2 -5" rotation="0 0 0"></a-image>
+        <a-image src="#img3" height="3" width="4" position="-6 2 -5" rotation="0 0 0"></a-image>
+        <a-image src="#img4" height="3" width="4" position="0 6 -5" rotation="0 0 0"></a-image>
+        <a-image src="#img5" height="3" width="4" position="6 6 -5" rotation="0 0 0"></a-image>
+        <a-image src="#img6" height="3" width="4" position="-6 6 -5" rotation="0 0 0"></a-image>
+      </a-entity>
+
+      <a-entity id="information" position="0 0 -15" visible="false">
+        <a-box height="15" width="23" depth="0.1" position="0 4 -5.1"></a-box>
+
+        <a-text color="black" position="-8.5 10 -5" scale="4 4 4" value="Malta's Flood Adaptation Efforts After 1979"></a-text>
+
+        <a-text position="-10.5 8 -5" scale="2 2 2" color="black" value="1. Upgrading Stormwater Drainage Systems: Existing drainage networks were improved to better handle heavy rainfall."></a-text>
+
+        <a-text
+          position="-10.5 5.2 -5"
+          scale="2 2 2"
+          color="black"
+          value="2. Building Stormwater Retention Basins: Retention basins were introduced to collect and temporarily store excess rainwater during storms.This reduced pressure on drainage systems and helped prevent flash flooding in urban zones."
+        ></a-text>
+
+        <a-text position="-10.5 2 -5" scale="2 2 2" color="black" value="3. Land Use Planning to Avoid Flood Zones: Post-1979, authorities began restricting development in areas known to be at high risk of flooding. New buildings had to comply with drainage and elevation requirements."></a-text>
+
+        <a-text position="0.5 8 -5" scale="2 2 2" color="black" value="4. Urban Adaptation Designs: Road designs and public spaces were adapted to allow better surface water flow. In some cases, infrastructure was elevated or modified to resist flood damage."></a-text>
+
+        <a-text position="0.5 5.2 -5" scale="2 2 2" color="black" value="5. Public Education on Flood Preparedness: Citizens were encouraged to understand flood risks and protect their property. Local councils helped coordinate community-level adaptation and preparedness efforts."></a-text>
+
+        <a-text
+          position="0.5 2 -5"
+          scale="2 2 2"
+          color="black"
+          value="6. Maintenance and Cleaning of Watercourses and Drains: After 1979, authorities increased the regular cleaning of valleys (wied), culverts, and street drains to prevent blockages. Blocked drainage was a major cause of the 1979 flood’s severity, so ongoing maintenance became a key adaptation strategy."
+        ></a-text>
+      </a-entity>
+    </a-scene>
+
+    <script>
+      const playButton = document.getElementById("playButton");
+      const infoButton = document.getElementById("infoButton");
+      const information = document.getElementById("information");
+      const photosButton = document.getElementById("photosButton");
+      const images = document.getElementById("images");
+      const ArrowLButton = document.getElementById("ArrowLButton");
+      const ArrowRButton = document.getElementById("ArrowRButton");
+
+      const rain = document.getElementById("rain");
+      const sky = document.querySelector("a-sky");
+      const floodWater = document.getElementById("floodWater");
+
+      const car1wrapper = document.getElementById("car1wrapper");
+      const car2wrapper = document.getElementById("car2wrapper");
+      const car3wrapper = document.getElementById("car3wrapper");
+      const car4wrapper = document.getElementById("car4wrapper");
+      const car5wrapper = document.getElementById("car5wrapper");
+
+      const oldCar1wrapper = document.getElementById("oldCar1wrapper");
+      const oldCar2wrapper = document.getElementById("oldCar2wrapper");
+
+      const rubble = document.getElementById("rubble");
+
+      const endButtons = document.getElementById("endButtons");
+
+      const rainSound = document.getElementById("rainSound");
+      const ambienceSound = document.getElementById("ambience");
+
+      const instructions = document.getElementById("webVrText");
+
+      let stage = 4;
+
+      let rainActive = false;
+
+      // Stop rain particles on load
+      window.addEventListener("DOMContentLoaded", () => {
+        if (rain.components["particle-system"]) {
+          rain.components["particle-system"].stopParticles();
+        } else {
+          rain.addEventListener("loaded", () => {
+            rain.components["particle-system"].stopParticles();
+          });
+        }
+      });
+
+      playButton.addEventListener("click", handlePlayButtonClick);
+
+      rainSound.loop = true;
+      rainSound.volume = 0.1;
+
+      ambienceSound.loop = true;
+      ambienceSound.volume = 0.1;
+
+      function handleArrowLButtonClick() {
+        console.log("Previous stage L:", stage);
+
+        if (stage === 4) {
+          stage = 3;
+
+          information.setAttribute("visible", "false");
+          images.setAttribute("visible", "false");
+
+          infoButton.setAttribute("visible", "false");
+          photosButton.setAttribute("visible", "false");
+
+          infoButton.removeEventListener("click", handleInfoButtonClick);
+          photosButton.removeEventListener("click", handlePhotosButtonClick);
+
+          ArrowRButton.setAttribute("visible", "true");
+          ArrowRButton.addEventListener("click", handleArrowRButtonClick);
+
+          console.log("New stage L:", stage);
+
+          rubble.setAttribute("visible", "false");
+          sky.setAttribute("src", "#cloudySky");
+          rain.components["particle-system"].startParticles();
+          rainSound.play();
+          ambienceSound.pause();
+
+          car4wrapper.setAttribute("visible", "true");
+          car5wrapper.setAttribute("visible", "true");
+
+          oldCar1wrapper.setAttribute("visible", "false");
+          oldCar2wrapper.setAttribute("visible", "false");
+
+          floodWater.setAttribute("animation__rise", {
+            property: "position",
+            from: "0 -1 0",
+            to: "0 2 0",
+            dur: 1000,
+            easing: "easeInOutSine",
+          });
+        } else if (stage === 3) {
+          stage = 2;
+
+          console.log("New stage L:", stage);
+
+          floodWater.setAttribute("animation__rise", {
+            property: "position",
+            from: "0 2 0",
+            to: "0 -1 0",
+            dur: 1000,
+            easing: "easeInOutSine",
+          });
+
+          car1wrapper.setAttribute("animation__stageM", {
+            property: "position",
+            from: "-26 0.5 -15",
+            to: "8 0 -10",
+            dur: 1000,
+            easing: "easeInSine",
+          });
+          car1wrapper.setAttribute("animation__stageR", {
+            property: "rotation",
+            from: "0 0 180",
+            to: " 0 0 0",
+            dur: 1000,
+            easing: "easeInSine",
+          });
+
+          car2wrapper.setAttribute("animation__stageM", {
+            property: "position",
+            from: "26 0.5 -5",
+            to: "-8 0 0",
+            dur: 1000,
+            easing: "easeInSine",
+          });
+          car2wrapper.setAttribute("animation__stageR", {
+            property: "rotation",
+            from: "0 0 180",
+            to: " 0 0 0",
+            dur: 1000,
+            easing: "easeInSine",
+          });
+
+          car3wrapper.setAttribute("animation__stageM", {
+            property: "position",
+            from: "-17 0.5 15",
+            to: "8 0 10",
+            dur: 1000,
+            easing: "easeInSine",
+          });
+
+          car4wrapper.setAttribute("animation__stageM", {
+            property: "position",
+            from: "-6 0.5 7",
+            to: "20 0 -17",
+            dur: 1000,
+            easing: "easeInSine",
+          });
+
+          car5wrapper.setAttribute("animation__stageM", {
+            property: "position",
+            from: "27 0.5 20",
+            to: "-30 0 17",
+            dur: 1000,
+            easing: "easeInSine",
+          });
+        } else if (stage === 2) {
+          stage = 1;
+
+          console.log("New stage L:", stage);
+
+          ArrowLButton.setAttribute("visible", "false");
+          ArrowLButton.removeEventListener("click", handleArrowLButtonClick);
+
+          sky.setAttribute("src", "#sunnySky");
+
+          rain.components["particle-system"].stopParticles();
+          rainSound.pause();
+          ambienceSound.play();
+        }
+      }
+
+      function handleArrowRButtonClick() {
+        console.log("Previous stage R:", stage);
+
+        if (stage === 1) {
+          stage = 2;
+
+          console.log("New stage R:", stage);
+
+          ArrowLButton.setAttribute("visible", "true");
+          ArrowLButton.addEventListener("click", handleArrowLButtonClick);
+
+          rain.components["particle-system"].startParticles();
+          rainSound.play();
+          ambienceSound.pause();
+          sky.setAttribute("src", "#cloudySky");
+        } else if (stage === 2) {
+          stage = 3;
+
+          console.log("New stage R:", stage);
+
+          floodWater.setAttribute("animation__rise", {
+            property: "position",
+            from: "0 -1 0",
+            to: "0 2 0",
+            dur: 1000,
+            easing: "easeInOutSine",
+          });
+
+          car1wrapper.setAttribute("animation__stageM", {
+            property: "position",
+            from: "8 0 -10",
+            to: "-26 2 -15",
+            dur: 1000,
+            easing: "easeInSine",
+          });
+          car1wrapper.setAttribute("animation__stageR", {
+            property: "rotation",
+            from: "0 0 0",
+            to: " 0 0 180",
+            dur: 1000,
+            easing: "easeInSine",
+          });
+
+          car2wrapper.setAttribute("animation__stageM", {
+            property: "position",
+            from: "-8 0 0",
+            to: "26 2 -5",
+            dur: 1000,
+            easing: "easeInSine",
+          });
+          car2wrapper.setAttribute("animation__stageR", {
+            property: "rotation",
+            from: "0 0 0",
+            to: " 0 0 180",
+            dur: 1000,
+            easing: "easeInSine",
+          });
+
+          car3wrapper.setAttribute("animation__stageM", {
+            property: "position",
+            from: "8 0 10",
+            to: "-17 0 15",
+            dur: 1000,
+            easing: "easeInSine",
+          });
+
+          car4wrapper.setAttribute("animation__stageM", {
+            property: "position",
+            from: "20 0 -17",
+            to: "-6 0 7",
+            dur: 1000,
+            easing: "easeInSine",
+          });
+
+          car5wrapper.setAttribute("animation__stageM", {
+            property: "position",
+            from: "-30 0 17",
+            to: "27 0 20",
+            dur: 1000,
+            easing: "easeInSine",
+          });
+        } else if (stage === 3) {
+          stage = 4;
+
+          console.log("New stage R:", stage);
+
+          infoButton.setAttribute("visible", "true");
+          photosButton.setAttribute("visible", "true");
+          ArrowRButton.setAttribute("visible", "false");
+
+          infoButton.addEventListener("click", handleInfoButtonClick);
+          photosButton.addEventListener("click", handlePhotosButtonClick);
+          ArrowRButton.removeEventListener("click", handleArrowRButtonClick);
+
+          car4wrapper.setAttribute("visible", "false");
+          car5wrapper.setAttribute("visible", "false");
+
+          oldCar1wrapper.setAttribute("visible", "true");
+          oldCar2wrapper.setAttribute("visible", "true");
+
+          rain.components["particle-system"].stopParticles();
+          rainSound.pause();
+          ambienceSound.play();
+          sky.setAttribute("src", "#sunnySky");
+          rubble.setAttribute("visible", "true");
+
+          floodWater.setAttribute("animation__rise", {
+            property: "position",
+            from: "0 2 0",
+            to: "0 -1 0",
+            dur: 1000,
+            easing: "easeInOutSine",
+          });
+        }
+      }
+
+      function handleInfoButtonClick() {
+        const infoVisible = information.getAttribute("visible") === "true";
+        information.setAttribute("visible", !infoVisible);
+
+        if (!infoVisible) {
+          images.setAttribute("visible", "false");
+        }
+      }
+
+      function handlePhotosButtonClick() {
+        const photosVisible = images.getAttribute("visible") === "true";
+        images.setAttribute("visible", !photosVisible);
+
+        if (!photosVisible) {
+          information.setAttribute("visible", "false");
+        }
+      }
+
+      function handlePlayButtonClick() {
+        rainActive = !rainActive;
+        // Remove clickability (disable further clicks)
+        playButton.removeEventListener("click", handlePlayButtonClick);
+
+        playButton.setAttribute("visible", "false");
+        instructions.setAttribute("visible", "false");
+
+        rain.components["particle-system"].startParticles();
+        rainSound.play();
+        ambienceSound.pause();
+
+        sky.setAttribute("src", "#cloudySky");
+
+        setTimeout(() => {
+          rain.components["particle-system"].stopParticles();
+          rainSound.pause();
+          ambienceSound.play();
+          sky.setAttribute("src", "#sunnySky");
+        }, 47000);
+
+        setTimeout(() => {
+          car4wrapper.setAttribute("visible", "false");
+          car5wrapper.setAttribute("visible", "false");
+
+          oldCar1wrapper.setAttribute("visible", "true");
+          oldCar2wrapper.setAttribute("visible", "true");
+
+          endButtons.setAttribute("visible", "true");
+          infoButton.addEventListener("click", handleInfoButtonClick);
+          photosButton.addEventListener("click", handlePhotosButtonClick);
+          ArrowLButton.addEventListener("click", handleArrowLButtonClick);
+        }, 65000);
+
+        setTimeout(() => {
+          rubble.setAttribute("visible", "true");
+        }, 55000);
+
+        setTimeout(() => {
+          car1wrapper.removeAttribute("animation__rotate");
+          car2wrapper.removeAttribute("animation__rotate");
+          car3wrapper.removeAttribute("animation__rotate");
+          car4wrapper.removeAttribute("animation__rotate");
+          car5wrapper.removeAttribute("animation__rotate");
+        }, 52000);
+
+        floodWater.setAttribute("animation__rise", {
+          property: "position",
+          to: "0 2 0",
+          dur: 20000,
+          easing: "easeInOutSine",
+        });
+
+        floodWater.setAttribute("animation__lower", {
+          property: "position",
+          from: "0 2 0",
+          to: "0 -1 0",
+          dur: 20000,
+          delay: 50000,
+          easing: "easeInOutSine",
+        });
+
+        //Car 1
+        car1wrapper.setAttribute("animation__rise", {
+          property: "position",
+          to: "8 0.5 -10",
+          dur: 5000,
+          delay: 10000,
+          easing: "easeInOutSine",
+        });
+        car1wrapper.setAttribute("animation__move", {
+          property: "position",
+          from: "8 0.5 -10",
+          to: "-26 0.5 -15",
+          dur: 10000,
+          delay: 15000,
+          easing: "easeInSine",
+        });
+        car1wrapper.setAttribute("animation__rotate", {
+          property: "rotation",
+          to: "3 30 10",
+          dur: 10000,
+          delay: 10000,
+          dir: "alternate",
+          loop: true,
+          easing: "easeInOutSine",
+        });
+        car1wrapper.setAttribute("animation__reset", {
+          property: "rotation",
+          to: "0 0 180",
+          dur: 7000,
+          delay: 45000,
+          easing: "easeInOutSine",
+        });
+        car1wrapper.setAttribute("animation__lower", {
+          property: "position",
+          from: "-26 0.5 -15",
+          to: "-26 2 -15",
+          dur: 3000,
+          delay: 45000,
+          easing: "easeInOutSine",
+        });
+
+        //Car 2
+        car2wrapper.setAttribute("animation__rise", {
+          property: "position",
+          to: "-8 0.5 0",
+          dur: 5000,
+          delay: 10000,
+          easing: "easeInOutSine",
+        });
+        car2wrapper.setAttribute("animation__move", {
+          property: "position",
+          from: "-8 0.5 0",
+          to: "26 0.5 -5",
+          dur: 15000,
+          delay: 13000,
+          easing: "easeInSine",
+        });
+        car2wrapper.setAttribute("animation__rotate", {
+          property: "rotation",
+          to: "3 -20 -5",
+          dur: 10000,
+          delay: 10000,
+          dir: "alternate",
+          loop: true,
+          easing: "easeInOutSine",
+        });
+        car2wrapper.setAttribute("animation__reset", {
+          property: "rotation",
+          to: "0 0 180",
+          dur: 6000,
+          delay: 46000,
+          easing: "easeInOutSine",
+        });
+        car2wrapper.setAttribute("animation__lower", {
+          property: "position",
+          from: "26 0.5 -5",
+          to: "26 2 -5",
+          dur: 3000,
+          delay: 46000,
+          easing: "easeInOutSine",
+        });
+
+        //Car 3
+        car3wrapper.setAttribute("animation__rise", {
+          property: "position",
+          to: "8 0.5 10",
+          dur: 5000,
+          delay: 10000,
+          easing: "easeInOutSine",
+        });
+        car3wrapper.setAttribute("animation__move", {
+          property: "position",
+          from: "8 0.5 10",
+          to: "-17 0.5 15",
+          dur: 15000,
+          delay: 12000,
+          easing: "easeInSine",
+        });
+        car3wrapper.setAttribute("animation__rotate", {
+          property: "rotation",
+          to: "-4 -50 -8",
+          dur: 10000,
+          delay: 10000,
+          dir: "alternate",
+          loop: true,
+          easing: "easeInOutSine",
+        });
+        car3wrapper.setAttribute("animation__reset", {
+          property: "rotation",
+          to: "0 0 0",
+          dur: 3000,
+          delay: 52000,
+          easing: "easeInOutSine",
+        });
+        car3wrapper.setAttribute("animation__lower", {
+          property: "position",
+          from: "-17 0.5 15",
+          to: "-17 0 15",
+          dur: 3000,
+          delay: 52000,
+          easing: "easeInOutSine",
+        });
+
+        //Car 4
+        car4wrapper.setAttribute("animation__rise", {
+          property: "position",
+          to: "20 0.5 -17",
+          dur: 5000,
+          delay: 13000,
+          easing: "easeInOutSine",
+        });
+        car4wrapper.setAttribute("animation__move", {
+          property: "position",
+          from: "20 0.5 -17",
+          to: "-6 0.5 7",
+          dur: 17000,
+          delay: 13000,
+          easing: "easeInSine",
+        });
+        car4wrapper.setAttribute("animation__rotate", {
+          property: "rotation",
+          to: "3 20 5",
+          dur: 10000,
+          delay: 12000,
+          dir: "alternate",
+          loop: true,
+          easing: "easeInOutSine",
+        });
+        car4wrapper.setAttribute("animation__reset", {
+          property: "rotation",
+          to: "0 0 0",
+          dur: 3000,
+          delay: 52000,
+          easing: "easeInOutSine",
+        });
+        car4wrapper.setAttribute("animation__lower", {
+          property: "position",
+          from: "-6 0.5 7",
+          to: "-6 0 7",
+          dur: 3000,
+          delay: 52000,
+          easing: "easeInOutSine",
+        });
+
+        //Car 5
+        car5wrapper.setAttribute("animation__rise", {
+          property: "position",
+          to: "-30 0.5 17",
+          dur: 5000,
+          delay: 11000,
+          easing: "easeInOutSine",
+        });
+        car5wrapper.setAttribute("animation__move", {
+          property: "position",
+          from: "-30 0.5 17",
+          to: "27 0.5 20",
+          dur: 15000,
+          delay: 15000,
+          easing: "easeInSine",
+        });
+        car5wrapper.setAttribute("animation__rotate", {
+          property: "rotation",
+          to: "3 -20 -5",
+          dur: 10000,
+          delay: 10000,
+          dir: "alternate",
+          loop: true,
+          easing: "easeInOutSine",
+        });
+        car5wrapper.setAttribute("animation__reset", {
+          property: "rotation",
+          to: "0 0 0",
+          dur: 3000,
+          delay: 52000,
+          easing: "easeInOutSine",
+        });
+        car5wrapper.setAttribute("animation__lower", {
+          property: "position",
+          from: "27 0.5 20",
+          to: "27 0 20",
+          dur: 3000,
+          delay: 52000,
+          easing: "easeInOutSine",
+        });
+      }
+    </script>
+  </body>
+</html>
